@@ -1,0 +1,18 @@
+{
+  "name": "simpels/laporan-bmkg",
+  "description": "SIMPels BMKG - PDF generator dependencies",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "dompdf/dompdf": "^2.0",
+    "setasign/fpdf": "1.8",
+    "setasign/fpdi": "2.6"
+  },
+  "config": {
+    "platform": {
+      "php": "8.0.0"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  }
+}

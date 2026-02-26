@@ -1,0 +1,27 @@
+# Dev-friendly cache control (XAMPP/Apache)
+# Forces browsers to fetch latest CSS/JS when iterating on UI.
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "no-store, must-revalidate, max-age=0"
+  </FilesMatch>
+</IfModule>
+
+FileETag None
+
+# Allow larger batch uploads (prevent hitting the 20-file PHP default).
+php_value max_file_uploads 100
+php_value upload_max_filesize 50M
+php_value post_max_size 60M
+
+# Redirect legacy static pages that were removed
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^login\.html$ /index.php [R=301,L]
+</IfModule>

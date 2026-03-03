@@ -324,7 +324,7 @@ if (!$user) {
           </section>
 
           <div class="actions">
-            <button type="button" class="btn-save" id="btn-save">Simpan Semua Data</button>
+            <button type="button" class="btn-save" id="btn-save">Simpan Draft</button>
             <button type="button" class="btn-gen" id="btn-generate">Generate Laporan</button>
           </div>
         </form>
@@ -460,12 +460,23 @@ if (!$user) {
       });
       document.getElementById('acc-add-ganti').addEventListener('click', () => addPenggantianRow('#acc-ganti-table'));
 
+      document.getElementById('acc-add-petugas').click();
+      document.getElementById('acc-add-ganti').click();
+      renderAccChecklist();
+      document.getElementById('acc-tipe').addEventListener('change', () => renderAccChecklist());
+    }
+
+    function renderAccChecklist() {
       const tbody = document.querySelector('#acc-checklist-table tbody');
+      tbody.innerHTML = '';
+      const tipeVal = document.getElementById('acc-tipe')?.value || 'accelerograph';
+      const tipeLabel = tipeVal === 'intensitymeter' ? 'Intensitymeter' : 'Accelerograph';
       const kondisiOpt = '<option value="Baik" selected>Baik</option><option value="Rusak">Rusak</option><option value="Perlu Perbaikan">Perlu Perbaikan</option>';
       accChecklistMaster.forEach(group => {
+        const categoryDisplay = group.category === 'WRSNG' ? tipeLabel : group.category;
         const cat = document.createElement('tr');
         cat.className = 'cat';
-        cat.innerHTML = `<td colspan="5">${group.category}</td>`;
+        cat.innerHTML = `<td colspan="5">${categoryDisplay}</td>`;
         tbody.appendChild(cat);
         group.items.forEach(item => {
           const tr = document.createElement('tr');
@@ -481,9 +492,6 @@ if (!$user) {
           tbody.appendChild(tr);
         });
       });
-
-      document.getElementById('acc-add-petugas').click();
-      document.getElementById('acc-add-ganti').click();
     }
 
     function initSeismograph() {

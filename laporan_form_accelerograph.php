@@ -161,7 +161,7 @@ if (!$user) {
 					</section>
 
 					<div class="actions">
-						<button type="button" class="btn-save" id="btn-save">Simpan Semua Data</button>
+						<button type="button" class="btn-save" id="btn-save">Simpan Draft</button>
 						<button type="button" class="btn-gen" id="btn-generate">Generate Laporan</button>
 					</div>
 				</form>
@@ -301,11 +301,15 @@ if (!$user) {
 
 		function renderChecklist() {
 			const tbody = document.querySelector('#checklist-table tbody');
+			tbody.innerHTML = '';
+			const tipeVal = document.getElementById('tipe_laporan')?.value || 'accelerograph';
+			const tipeLabel = tipeVal === 'intensitymeter' ? 'Intensitymeter' : 'Accelerograph';
 			const kondisiOpt = '<option value="Baik" selected>Baik</option><option value="Rusak">Rusak</option><option value="Perlu Perbaikan">Perlu Perbaikan</option>';
 			checklistMaster.forEach(group => {
+				const categoryDisplay = group.category === 'WRSNG' ? tipeLabel : group.category;
 				const cat = document.createElement('tr');
 				cat.className = 'cat';
-				cat.innerHTML = `<td colspan="5">${group.category}</td>`;
+				cat.innerHTML = `<td colspan="5">${categoryDisplay}</td>`;
 				tbody.appendChild(cat);
 				group.items.forEach(item => {
 					const tr = document.createElement('tr');
@@ -444,6 +448,7 @@ if (!$user) {
 			kodeSiteInput.value = '';
 			namaSiteInput.value = '';
 			hydrateSiteSuggestions();
+			renderChecklist();
 		});
 
 		addPetugasRow();

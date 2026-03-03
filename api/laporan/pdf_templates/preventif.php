@@ -15,6 +15,7 @@ function pdf_template_preventif(array $payload, ?string $kopDataUri, bool $image
 
   $tipeRaw = (string)($detail['tipe_laporan'] ?? 'accelerograph');
   $tipe = $tipeRaw === 'intensitymeter' ? 'INTENSITYMETER' : 'ACCELEROGRAPH';
+  $tipeLabel = $tipeRaw === 'intensitymeter' ? 'Intensitymeter' : 'Accelerograph';
 
   // Caption -> data URI (case-insensitive)
   $captionToSrc = [];
@@ -85,14 +86,15 @@ function pdf_template_preventif(array $payload, ?string $kopDataUri, bool $image
     }
   }
 
-  $buildChecklist = function (string $mode) use ($categoryOrder, $grouped, $captionToSrc, $imagesEnabled): string {
+  $buildChecklist = function (string $mode) use ($categoryOrder, $grouped, $captionToSrc, $imagesEnabled, $tipeLabel): string {
     $rows = '';
     foreach ($categoryOrder as $cat) {
       $items = $grouped[$cat] ?? [];
       if (!$items) {
         continue;
       }
-      $rows .= '<tr class="subhead"><td colspan="3"><b>' . pdf_escape($cat) . '</b></td></tr>';
+      $catDisplay = $cat === 'WRSNG' ? $tipeLabel : pdf_escape($cat);
+      $rows .= '<tr class="subhead"><td colspan="3"><b>' . $catDisplay . '</b></td></tr>';
 
       foreach ($items as $item) {
         if (!is_array($item)) {
@@ -112,11 +114,12 @@ function pdf_template_preventif(array $payload, ?string $kopDataUri, bool $image
         }
 
         $rows .= '<tr>'
-          . '<td class="desc" rowspan="2">' . $labelEsc . '</td>'
+          . '<td class="desc">' . $labelEsc . '</td>'
           . '<td class="label">Foto</td>'
           . '<td class="value c">' . $imgHtml . '</td>'
           . '</tr>'
           . '<tr>'
+          . '<td class="desc"></td>'
           . '<td class="label">Kondisi</td>'
           . '<td class="value">' . $kondisi . '</td>'
           . '</tr>';

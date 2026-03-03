@@ -147,7 +147,7 @@ if (!$laporan_id) {
 					</section>
 
 					<div class="actions">
-						<button type="button" class="btn-save" id="btn-save">Simpan Semua Data</button>
+						<button type="button" class="btn-save" id="btn-save">Simpan Draft</button>
 						<button type="button" class="btn-gen" id="btn-generate">Generate Laporan</button>
 					</div>
 				</form>

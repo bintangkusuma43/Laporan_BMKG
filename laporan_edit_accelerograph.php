@@ -38,8 +38,8 @@ if (!$laporan_id) {
 		<div class="app-shell-main">
 			<header class="app-topbar">
 				<div class="page-title">
-					<h1>Edit Draft Laporan Accelerograph</h1>
-					<div class="subtitle">Perbarui data pemeliharaan Accelerograph &amp; Intensitymeter</div>
+				<h1 id="page-title">Edit Draft Laporan Accelerograph</h1>
+				<div class="subtitle" id="page-subtitle">Perbarui data pemeliharaan Accelerograph</div>
 				</div>
 				<div class="user-box">
 					<div data-user-info><?php echo htmlspecialchars($user['full_name'] ?? $user['username']); ?></div>
@@ -174,7 +174,7 @@ if (!$laporan_id) {
 					</section>
 
 					<div class="actions">
-						<button type="button" class="btn-save" id="btn-save">Simpan Semua Data</button>
+						<button type="button" class="btn-save" id="btn-save">Simpan Draft</button>
 						<button type="button" class="btn-gen" id="btn-generate">Generate Laporan</button>
 					</div>
 				</form>
@@ -319,12 +319,15 @@ if (!$laporan_id) {
 		function renderChecklist(existingData = []) {
 			const tbody = document.querySelector('#checklist-table tbody');
 			tbody.innerHTML = '';
+			const tipeVal = document.getElementById('tipe_laporan')?.value || 'accelerograph';
+			const tipeLabel = tipeVal === 'intensitymeter' ? 'Intensitymeter' : 'Accelerograph';
 			const kondisiOpt = '<option value="Baik">Baik</option><option value="Rusak">Rusak</option><option value="Perlu Perbaikan">Perlu Perbaikan</option>';
 			
 			checklistMaster.forEach(group => {
+				const categoryDisplay = group.category === 'WRSNG' ? tipeLabel : group.category;
 				const cat = document.createElement('tr');
 				cat.className = 'cat';
-				cat.innerHTML = `<td colspan="5">${group.category}</td>`;
+				cat.innerHTML = `<td colspan="5">${categoryDisplay}</td>`;
 				tbody.appendChild(cat);
 				
 				group.items.forEach(item => {
@@ -448,6 +451,7 @@ if (!$laporan_id) {
 
 				// Isi form utama
 				document.getElementById('tipe_laporan').value = detail.tipe_laporan || 'accelerograph';
+				updateTipeTitle();
 				document.getElementById('tanggal_laporan').value = laporan.tanggal_laporan || '';
 				document.getElementById('nomor_surat').value = detail.nomor_surat || detail.nomor_spt || '';
 				document.getElementById('kode_site').value = detail.kode_site || '';
@@ -617,12 +621,28 @@ if (!$laporan_id) {
 		const namaSiteInput = document.getElementById('nama_site');
 		if (kodeSiteInput) ['change', 'blur'].forEach(evt => kodeSiteInput.addEventListener(evt, autoFillSiteFromMaster));
 		if (namaSiteInput) ['change', 'blur'].forEach(evt => namaSiteInput.addEventListener(evt, autoFillSiteFromMaster));
+		
+		function updateTipeTitle() {
+			const tipe = document.getElementById('tipe_laporan').value;
+			const titleEl = document.getElementById('page-title');
+			const subtitleEl = document.getElementById('page-subtitle');
+			if (tipe === 'intensitymeter') {
+				titleEl.textContent = 'Edit Draft Laporan Intensitymeter';
+				subtitleEl.textContent = 'Perbarui data pemeliharaan Intensitymeter';
+			} else {
+				titleEl.textContent = 'Edit Draft Laporan Accelerograph';
+				subtitleEl.textContent = 'Perbarui data pemeliharaan Accelerograph';
+			}
+		}
+		
 		const tipeSelect = document.getElementById('tipe_laporan');
 		if (tipeSelect) tipeSelect.addEventListener('change', () => {
+			updateTipeTitle();
 			kodeSiteInput.value = '';
 			namaSiteInput.value = '';
 			autoFillSiteFromMaster();
 			hydrateSiteSuggestions();
+			renderChecklist();
 		});
 
 		requireAuth();

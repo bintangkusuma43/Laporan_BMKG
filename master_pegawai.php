@@ -22,6 +22,11 @@ if (($user['role'] ?? '') !== 'admin') {
   <link rel="stylesheet" href="/laporan_bmkg/assets/css/form-shared.css" />
 </head>
 <body class="app-shell">
+  <div class="mobile-topbar">
+    <button id="mobileMenuBtn" class="hamburger-btn" type="button" aria-label="Buka menu">☰</button>
+    <div class="mobile-title">SIMPels BMKG</div>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
   <div class="app-layout">
     <aside class="app-sidebar">
       <div class="sidebar-brand">

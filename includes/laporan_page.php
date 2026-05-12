@@ -219,6 +219,11 @@ if ($isGalleryMode) {
   </style>
 </head>
 <body class="app-shell<?= $isSpareMode ? ' spare-mode' : ''; ?><?= $isGalleryMode ? ' gallery-mode' : ''; ?><?= (!$isSpareMode && !$isGalleryMode) ? ' history-mode' : ''; ?>">
+  <div class="mobile-topbar">
+    <button id="mobileMenuBtn" class="hamburger-btn" type="button" aria-label="Buka menu">☰</button>
+    <div class="mobile-title">SIMPels BMKG</div>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
   <div class="app-layout">
     <aside class="app-sidebar">
       <div class="sidebar-brand">
@@ -298,7 +303,7 @@ if ($isGalleryMode) {
             </div>
             <div id="table-hint" class="muted" style="color:#64748b;font-size:13px;">Memuat...</div>
           </div>
-          <div class="table-wrapper">
+          <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr id="table-head-row" style="background:#f8fafc;"></tr>

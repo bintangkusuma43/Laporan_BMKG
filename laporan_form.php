@@ -45,6 +45,11 @@ if (!$user) {
   </style>
 </head>
 <body class="app-shell">
+  <div class="mobile-topbar">
+    <button id="mobileMenuBtn" class="hamburger-btn" type="button" aria-label="Buka menu">☰</button>
+    <div class="mobile-title">SIMPels BMKG</div>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
   <div class="app-layout">
     <aside class="app-sidebar">
       <div class="sidebar-brand">
@@ -117,7 +122,7 @@ if (!$user) {
 
             <div class="section-sub" style="margin-top:12px;">Petugas Pelaksana</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="wrs-add-petugas">Tambah Petugas</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="wrs-petugas-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama</th><th>NIP</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -126,7 +131,7 @@ if (!$user) {
 
             <div class="section-sub">Rincian Kegiatan</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="wrs-add-kegiatan">Tambah Kegiatan</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="wrs-kegiatan-table">
                 <thead><tr><th style="width:70px;">No</th><th>Judul</th><th>Keterangan</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -135,7 +140,7 @@ if (!$user) {
 
             <div class="section-sub">Catatan Penggantian Alat</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="wrs-add-ganti">Tambah Penggantian</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="wrs-ganti-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama Alat</th><th>Merk/Type</th><th>Jumlah</th><th>S/N Baru</th><th>S/N Lama</th><th>Keterangan</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -190,7 +195,7 @@ if (!$user) {
 
             <div class="section-sub" style="margin-top:12px;">Petugas Pelaksana</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="acc-add-petugas">Tambah Petugas</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="acc-petugas-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama</th><th>NIP</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -198,7 +203,7 @@ if (!$user) {
             </div>
 
             <div class="section-sub">Checklist Kondisi Peralatan</div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="acc-checklist-table">
                 <thead>
                   <tr><th>Deskripsi</th><th>Kondisi Sebelum</th><th>Foto Sebelum</th><th>Kondisi Sesudah</th><th>Foto Sesudah</th></tr>
@@ -232,7 +237,7 @@ if (!$user) {
 
             <div class="section-sub" style="margin-top:12px;">Catatan Penggantian Alat</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="acc-add-ganti">Tambah Penggantian</button></div>
-            <div class="table-wrap">
+            <div class="table-responsive">
               <table class="line-table" id="acc-ganti-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama Alat</th><th>Merk/Type</th><th>Jumlah</th><th>S/N Baru</th><th>S/N Lama</th><th>Keterangan</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -262,7 +267,7 @@ if (!$user) {
 
             <div class="section-sub">Petugas Pelaksana</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="seis-add-petugas">Tambah Petugas</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="seis-petugas-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama</th><th>NIP</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -271,7 +276,7 @@ if (!$user) {
 
             <div class="section-sub">Checklist (Sebelum/Sesudah)</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="seis-add-checklist">Tambah Checklist</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="seis-checklist-table">
                 <thead><tr><th style="width:70px;">No</th><th>Deskripsi</th><th>Parameter</th><th>Foto Sebelum</th><th>Foto Sesudah</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
@@ -301,7 +306,7 @@ if (!$user) {
 
             <div class="section-sub">Catatan Penggantian Alat</div>
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="seis-add-ganti">Tambah Penggantian</button></div>
-            <div class="table-wrap" style="margin-bottom:12px;">
+            <div class="table-responsive" style="margin-bottom:12px;">
               <table class="line-table" id="seis-ganti-table">
                 <thead><tr><th style="width:70px;">No</th><th>Nama Alat</th><th>Merk/Type</th><th>Jumlah</th><th>S/N Baru</th><th>S/N Lama</th><th>Keterangan</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>

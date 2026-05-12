@@ -265,6 +265,11 @@ if (!$user) {
   </style>
 </head>
 <body class="app-shell">
+  <div class="mobile-topbar">
+    <button id="mobileMenuBtn" class="hamburger-btn" type="button" aria-label="Buka menu">☰</button>
+    <div class="mobile-title">SIMPels BMKG</div>
+  </div>
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
   <div class="app-layout">
     <aside class="app-sidebar">
       <div class="sidebar-brand">
@@ -355,7 +360,7 @@ if (!$user) {
               <a class="btn btn-outline" href="/laporan_bmkg/laporan_list.php" style="white-space:nowrap;">Lihat Semua →</a>
             </div>
           </div>
-          <div class="table-wrapper">
+          <div class="table-responsive">
             <table class="dashboard-table">
               <thead>
                 <tr>

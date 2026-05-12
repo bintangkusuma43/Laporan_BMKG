@@ -71,6 +71,71 @@ body {
     stroke-linejoin: round;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE TOPBAR & HAMBURGER MENU
+   ═══════════════════════════════════════════════════════════════ */
+
+.mobile-topbar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 1500;
+        height: 56px;
+        padding: 0 14px;
+        background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+        color: white;
+        box-shadow: 0 2px 12px rgba(15, 23, 42, 0.15);
+    }
+
+    .hamburger-btn {
+        width: 42px;
+        height: 42px;
+        border: 0;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.18);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        cursor: pointer;
+        padding: 0;
+        transition: background-color 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .hamburger-btn:active {
+        background: rgba(255, 255, 255, 0.28);
+    }
+
+    .mobile-title {
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        flex: 1;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.55);
+        z-index: 1900;
+        display: none;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
 /* Isolate seismograph layout from default top header/nav so it doesn't clash */
 body.seismograph-layout > header,
 body.seismograph-layout > nav {
@@ -426,7 +491,192 @@ body.seismograph-layout > nav {
     min-width: 0;
 }
 
-@media (max-width: 1080px) {
+/* ═══════════════════════════════════════════════════════════════
+   TABLE RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
+.table-responsive {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid #e4e8f0;
+    background: #ffffff;
+}
+
+.table-responsive table {
+    width: max-content;
+    min-width: 760px;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+}
+
+.table-responsive th,
+.table-responsive td {
+    white-space: nowrap;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e4e8f0;
+}
+
+.table-responsive th {
+    background: #f5f7fb;
+    font-weight: 600;
+    color: #1f2a44;
+    font-size: 13px;
+}
+
+.table-responsive td {
+    font-size: 14px;
+    color: #1f2a44;
+}
+
+.table-responsive input,
+.table-responsive select,
+.table-responsive textarea {
+    width: 100%;
+    min-width: 140px;
+    padding: 8px 10px;
+    border: 1px solid #e4e8f0;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.table-responsive input[type="file"] {
+    min-width: 200px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ACTION BAR / STICKY FORM ACTIONS
+   ═══════════════════════════════════════════════════════════════ */
+
+.action-bar,
+.form-actions,
+.sticky-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 24px;
+    background: #ffffff;
+    border-top: 1px solid #e4e8f0;
+}
+
+.action-bar .btn,
+.form-actions .btn,
+.sticky-actions .btn,
+.action-bar button,
+.form-actions button,
+.sticky-actions button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #1f2a44;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.action-bar .btn:hover,
+.form-actions .btn:hover,
+.sticky-actions .btn:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.action-bar .btn-primary,
+.form-actions .btn-primary,
+.sticky-actions .btn-primary,
+.action-bar .btn-save,
+.form-actions .btn-save,
+.sticky-actions .btn-save {
+    background: #1d4ed8;
+    color: white;
+    border-color: #1d4ed8;
+}
+
+.action-bar .btn-primary:hover,
+.form-actions .btn-primary:hover,
+.sticky-actions .btn-primary:hover {
+    background: #1e40af;
+    border-color: #1e40af;
+}
+
+@media (max-width: 768px) {
+    .action-bar,
+    .form-actions,
+    .sticky-actions {
+        position: fixed;
+        bottom: 0;
+        z-index: 1200;
+        left: 0;
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid #e5e7eb;
+        border-radius: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .action-bar .btn,
+    .form-actions .btn,
+    .sticky-actions .btn,
+    .action-bar button,
+    .form-actions button,
+    .sticky-actions button {
+        width: 100%;
+        min-height: 44px;
+        border-radius: 10px;
+        padding: 12px 14px;
+    }
+
+    .app-shell .page-body {
+        padding-bottom: 160px !important;
+    }
+
+    .main-content,
+    .page-content,
+    .content-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 14px !important;
+        padding-bottom: 160px !important;
+        overflow-x: hidden;
+    }
+
+    .table-responsive {
+        margin-left: -4px;
+        margin-right: -4px;
+        padding-bottom: 6px;
+        border-radius: 0;
+    }
+
+    .table-responsive table {
+        min-width: 820px;
+    }
+
+    .table-responsive input,
+    .table-responsive select,
+    .table-responsive textarea {
+        min-width: 160px;
+    }
+
+    .table-responsive input[type="file"] {
+        min-width: 220px;
+        max-width: 260px;
+    }
+}
+
+@media (max-width: 768px) {
     .sidebar-toggle {
         display: flex;
     }

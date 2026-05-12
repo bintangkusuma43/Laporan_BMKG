@@ -347,11 +347,477 @@ body.app-shell {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Responsive ──────────────────────────────────────── */
+
+/* Tablet & Small Desktop (≤ 768px) */
 @media (max-width: 768px) {
-  .page-body { padding: 14px 14px 40px; }
-  .section-card { padding: 16px; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .actions { flex-direction: column; }
-  .btn-save, .btn-gen { width: 100%; text-align: center; justify-content: center; }
-  .inline-group { flex-direction: column; align-items: stretch; }
+  body.app-shell {
+    background-attachment: fixed;
+  }
+
+  .page-body {
+    padding: 14px 14px 120px;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .app-shell .app-topbar {
+    padding: 14px 14px !important;
+  }
+
+  .app-shell .app-topbar .page-title h1 {
+    font-size: 18px !important;
+  }
+
+  .app-shell .app-topbar .page-title .subtitle {
+    font-size: 12px !important;
+  }
+
+  .app-shell .app-topbar .user-box {
+    padding: 6px 10px !important;
+    gap: 8px !important;
+  }
+
+  .app-shell .app-topbar .user-box > div[data-user-info] {
+    font-size: 12px !important;
+  }
+
+  .app-shell .app-topbar .user-box .user-role {
+    font-size: 10px !important;
+  }
+
+  .section-card {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 13px;
+  }
+
+  .section-sub {
+    font-size: 11px;
+    margin-top: 1px;
+  }
+
+  .section-header {
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .section-card label {
+    font-size: 10px;
+    margin-bottom: 4px;
+  }
+
+  .section-card input[type="text"],
+  .section-card input[type="date"],
+  .section-card input[type="number"],
+  .section-card input[type="file"],
+  .section-card textarea,
+  .section-card select {
+    padding: 9px 10px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .section-card textarea {
+    min-height: 80px;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stack {
+    gap: 8px;
+  }
+
+  .inline-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  /* Table responsive wrapper */
+  .table-wrap {
+    border-radius: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #e2e8f0;
+  }
+
+  .line-table {
+    min-width: 700px;
+  }
+
+  .line-table th,
+  .line-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .line-table th {
+    font-size: 9px;
+    white-space: nowrap;
+  }
+
+  .line-table input,
+  .line-table select {
+    padding: 5px 8px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  .btn-mini {
+    padding: 5px 10px;
+    font-size: 11px;
+    border-radius: 6px;
+  }
+
+  .btn-add {
+    padding: 7px 12px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .btn-del {
+    padding: 6px 12px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  /* Action bar - sticky at bottom with safe spacing */
+  .actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    background: linear-gradient(180deg, rgba(240, 244, 255, 0.95) 0%, rgba(240, 244, 255, 0.98) 100%);
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -2px 12px rgba(15, 23, 42, 0.08);
+    z-index: 100;
+    max-width: 100%;
+  }
+
+  .btn-save,
+  .btn-gen {
+    width: 100%;
+    padding: 11px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .hero {
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-size: 18px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .hero p {
+    font-size: 12px !important;
+  }
+
+  .existing-list {
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+
+  .dok-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+
+  .dok-card {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .dok-img {
+    height: 120px;
+  }
+
+  .dok-caption {
+    padding: 6px 8px;
+    font-size: 11px;
+    min-height: 35px;
+  }
+
+  .dynamic-card {
+    padding: 14px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+  }
+
+  .dynamic-title {
+    font-size: 12px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+  }
+}
+
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body.app-shell {
+    width: 100vw;
+  }
+
+  .page-body {
+    padding: 12px 12px 120px;
+    gap: 10px;
+  }
+
+  .app-shell .app-topbar {
+    padding: 12px 12px !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .app-shell .app-topbar .page-title {
+    width: 100%;
+  }
+
+  .app-shell .app-topbar .page-title h1 {
+    font-size: 16px !important;
+  }
+
+  .app-shell .app-topbar .page-title .subtitle {
+    font-size: 11px !important;
+  }
+
+  .app-shell .app-topbar .user-box {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-top: 8px;
+    padding: 8px 12px !important;
+  }
+
+  .app-shell .app-topbar .user-box > div[data-user-info] {
+    font-size: 11px !important;
+  }
+
+  .section-card {
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .section-sub {
+    font-size: 10px;
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  .section-header {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    gap: 6px;
+  }
+
+  .section-dot {
+    height: 18px;
+  }
+
+  .section-card label {
+    font-size: 9px;
+    margin-bottom: 3px;
+    letter-spacing: 0.2px;
+  }
+
+  .section-card input[type="text"],
+  .section-card input[type="date"],
+  .section-card input[type="number"],
+  .section-card input[type="file"],
+  .section-card textarea,
+  .section-card select {
+    padding: 8px 9px;
+    font-size: 11px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .section-card textarea {
+    min-height: 70px;
+  }
+
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stack {
+    gap: 6px;
+    flex-direction: column;
+  }
+
+  .inline-group {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* Table with horizontal scroll */
+  .table-wrap {
+    border-radius: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 8px;
+  }
+
+  .line-table {
+    min-width: 650px;
+    font-size: 11px;
+  }
+
+  .line-table th,
+  .line-table td {
+    padding: 7px 8px;
+    font-size: 10px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .line-table th {
+    font-size: 8px;
+    padding: 6px 7px;
+    white-space: nowrap;
+  }
+
+  .line-table input,
+  .line-table select {
+    padding: 4px 6px;
+    font-size: 10px;
+    border-radius: 5px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .btn-mini {
+    padding: 4px 8px;
+    font-size: 10px;
+    border-radius: 5px;
+  }
+
+  .btn-add {
+    padding: 6px 10px;
+    font-size: 10px;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  .btn-del {
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  /* Action bar - fixed at bottom */
+  .actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    background: #f0f4ff;
+    border-top: 1px solid #e2e8f0;
+    box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.1);
+    z-index: 100;
+    margin: 0;
+  }
+
+  .btn-save,
+  .btn-gen {
+    width: 100%;
+    padding: 10px;
+    font-size: 11px;
+    border-radius: 6px;
+    border: none;
+  }
+
+  .hero {
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 {
+    font-size: 16px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .hero p {
+    font-size: 11px !important;
+  }
+
+  .existing-list {
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  .chip-filled {
+    padding: 2px 7px;
+    font-size: 10px;
+    border-radius: 999px;
+  }
+
+  .dok-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px;
+  }
+
+  .dok-card {
+    max-width: 100%;
+    border-radius: 6px;
+  }
+
+  .dok-img {
+    height: 100px;
+  }
+
+  .dok-caption {
+    padding: 5px 6px;
+    font-size: 10px;
+    min-height: 30px;
+  }
+
+  .dynamic-card {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+
+  .dynamic-title {
+    font-size: 11px;
+    margin-bottom: 6px;
+    padding-bottom: 5px;
+  }
+
+  .loading-spinner {
+    width: 32px;
+    height: 32px;
+  }
 }

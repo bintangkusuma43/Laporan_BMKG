@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Implementasi Table Responsive - Laporan BMKG</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fb;
+            color: #1f2a44;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1d4ed8;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #2563eb;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+        .subtitle {
+            color: #6b7a99;
+            margin-bottom: 20px;
+        }
+        .code-section {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 16px;
+            margin: 16px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        pre {
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.4;
+            font-family: "Courier New", monospace;
+        }
+        .label {
+            display: inline-block;
+            background: #e0eaff;
+            color: #1d4ed8;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+        .note {
+            background: #fff7e6;
+            border: 1px solid #fcd34d;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 12px 0;
+            color: #78350f;
+            font-size: 13px;
+        }
+        .success {
+            background: #ecfdf3;
+            border: 1px solid #86efac;
+            color: #166534;
+        }
+        .warning {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #7f1d1d;
+        }
+        .break {
+            page-break-after: always;
+            margin: 40px 0;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 40px;
+        }
+        .highlight {
+            background: #fef08a;
+            padding: 2px 4px;
+        }
+        table.reference {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+        table.reference th,
+        table.reference td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+        table.reference th {
+            background: #f1f5fb;
+            font-weight: 700;
+        }
+        .tag {
+            display: inline-block;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 11px;
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📱 Panduan Implementasi Table Responsive</h1>
+    <p class="subtitle">Contoh lengkap untuk semua tabel di Laporan BMKG/SIMPels</p>
+    
+    <div class="note success">
+        ✅ Seluruh tabel dalam aplikasi SUDAH dilengkapi dengan media queries responsive.
+        Panduan ini menunjukkan struktur HTML yang HARUS digunakan untuk tabel baru.
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TABEL PETUGAS PELAKSANA -->
+<!-- ============================================================ -->
+<div class="container">
+    <h2>1. Tabel Petugas Pelaksana</h2>
+    <p class="subtitle">Gunakan di WRS NG, Accelerograph, Seismograph</p>
+
+    <span class="label">✅ FORMAT YANG BENAR</span>
+    <div class="code-section">
+        <pre>&lt;div class="section-card"&gt;
+  &lt;div class="section-title"&gt;Petugas Pelaksana&lt;/div&gt;
+  &lt;div class="section-sub"&gt;Daftar petugas yang melakukan pemeliharaan&lt;/div&gt;
+  
+  &lt;div class="stack" style="margin-bottom:8px;"&gt;
+    &lt;button type="button" class="btn-add" id="wrs-add-petugas"&gt;
+      + Tambah Petugas
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;!-- PENTING: Wrapper responsif untuk tabel --&gt;
+  &lt;div class="table-wrap"&gt;
+    &lt;table class="line-table" id="wrs-petugas-table"&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th style="width:50px;"&gt;No&lt;/th&gt;
+          &lt;th&gt;Nama Petugas&lt;/th&gt;
+          &lt;th&gt;NIP&lt;/th&gt;
+          &lt;th style="width:100px;"&gt;Aksi&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;

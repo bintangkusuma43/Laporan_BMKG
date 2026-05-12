@@ -285,4 +285,44 @@ function initFilledIndicators(scope) {
 
 document.addEventListener('DOMContentLoaded', () => {
     initFilledIndicators();
+    
+    // Sidebar toggle functionality for mobile/tablet
+    const sidebar = document.querySelector('.app-sidebar');
+    const appLayout = document.querySelector('.app-layout');
+    
+    // Create and add toggle button if sidebar exists
+    if (sidebar && appLayout) {
+        const sidebarToggle = document.createElement('button');
+        sidebarToggle.className = 'sidebar-toggle';
+        sidebarToggle.setAttribute('aria-label', 'Buka/tutup menu');
+        sidebarToggle.setAttribute('data-sidebar-toggle', 'true');
+        sidebarToggle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+        
+        // Insert toggle button into topbar
+        const topbar = document.querySelector('.app-topbar');
+        if (topbar) {
+            topbar.insertBefore(sidebarToggle, topbar.firstChild);
+        }
+        
+        // Toggle sidebar open/close
+        sidebarToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            sidebar.classList.toggle('sidebar-open');
+        });
+        
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.app-sidebar') && !e.target.closest('[data-sidebar-toggle]')) {
+                sidebar.classList.remove('sidebar-open');
+            }
+        });
+        
+        // Close sidebar when clicking on a nav link
+        const navLinks = sidebar.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('sidebar-open');
+            });
+        });
+    }
 });

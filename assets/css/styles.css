@@ -32,10 +32,43 @@ body {
                 radial-gradient(circle at 80% 0%, rgba(14, 165, 233, 0.08), transparent 24%),
                 var(--bg-light);
     color: var(--text);
+    overflow-x: hidden;
 }
 
 .app-shell {
     overflow-x: hidden;
+}
+
+/* Sidebar toggle button for mobile/tablet */
+.sidebar-toggle {
+    display: none;
+    position: relative;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: background-color 200ms ease;
+    z-index: 1001;
+}
+
+.sidebar-toggle:hover {
+    background-color: rgba(29, 78, 216, 0.1);
+}
+
+.sidebar-toggle svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 /* Isolate seismograph layout from default top header/nav so it doesn't clash */
@@ -46,10 +79,10 @@ body.seismograph-layout > nav {
 
 /* Global application shell */
 .app-shell .app-layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
+    display: flex;
     min-height: 100vh;
     width: 100%;
+    position: relative;
 }
 
 .app-shell .app-sidebar {
@@ -59,11 +92,15 @@ body.seismograph-layout > nav {
     display: flex;
     flex-direction: column;
     gap: 18px;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    width: 260px;
     height: 100vh;
     box-shadow: 4px 0 20px rgba(7, 12, 22, 0.35);
     border-right: 1px solid rgba(255, 255, 255, 0.06);
+    z-index: 1000;
+    overflow-y: auto;
 }
 
 .app-shell .sidebar-brand {
@@ -316,7 +353,8 @@ body.seismograph-layout > nav {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    width: 100%;
+    width: calc(100% - 260px);
+    margin-left: 260px;
     min-width: 0;
 }
 
@@ -389,21 +427,37 @@ body.seismograph-layout > nav {
 }
 
 @media (max-width: 1080px) {
+    .sidebar-toggle {
+        display: flex;
+    }
+
     .app-shell .app-layout {
-        grid-template-columns: 1fr;
+        flex-direction: row;
+    }
+
+    .app-shell .app-shell-main {
+        width: 100%;
+        margin-left: 0;
     }
 
     .app-shell .app-sidebar {
-        position: relative;
-        height: auto;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        z-index: 2000;
+        overflow-y: auto;
+    }
+
+    .app-shell .app-sidebar.sidebar-open {
+        transform: translateX(0);
     }
 
     .app-shell nav[data-nav] {
         flex-direction: column;
-        width: 100%;
     }
 
     .app-shell .page-body {
@@ -412,8 +466,24 @@ body.seismograph-layout > nav {
 }
 
 @media (max-width: 900px) {
+    .sidebar-toggle {
+        display: flex;
+    }
+
     .app-shell .app-sidebar {
         padding: 16px 12px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100vh;
+        transform: translateX(-100%);
+        z-index: 2000;
+    }
+
+    .app-shell .app-shell-main {
+        width: 100%;
+        margin-left: 0;
     }
 
     .app-shell .brand-sub {
@@ -438,6 +508,18 @@ body.seismograph-layout > nav {
 
     .app-shell .page-body {
         padding: 0 14px 28px;
+    }
+
+    .app-shell .app-sidebar {
+        width: 260px;
+        height: 100vh;
+        transform: translateX(-100%);
+        z-index: 2000;
+    }
+
+    .app-shell .app-shell-main {
+        width: 100%;
+        margin-left: 0;
     }
 }
 
@@ -1819,38 +1901,56 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  /* App layout - collapse sidebar to horizontal on smaller screens */
+  .sidebar-toggle {
+    display: flex;
+  }
+
+  /* App layout - sidebar off-canvas on smaller screens */
   .app-shell .app-layout {
-    grid-template-columns: 1fr;
+    flex-direction: row;
     min-height: auto;
   }
 
-  .app-shell .app-sidebar {
-    position: relative;
-    height: auto;
+  .app-shell .app-shell-main {
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
-    padding-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(7, 12, 22, 0.1);
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-left: 0;
+  }
+
+  .app-shell .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 2000;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 18px;
+    padding: 22px 18px 48px;
+    box-shadow: 4px 0 20px rgba(7, 12, 22, 0.35);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: none;
+    overflow-y: auto;
+  }
+
+  .app-shell .app-sidebar.sidebar-open {
+    transform: translateX(0);
   }
 
   .app-shell .sidebar-brand {
     flex: 0 1 auto;
-    gap: 8px;
+    gap: 10px;
   }
 
   .app-shell .brand-mark {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
   }
 
   .app-shell .brand-title {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .app-shell .brand-sub {
@@ -1858,24 +1958,23 @@ body {
   }
 
   .app-shell nav[data-nav] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 6px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: auto;
+    gap: 10px;
   }
 
   .app-shell .nav-link {
-    padding: 8px 10px;
-    font-size: 12px;
-    flex: 1;
-    min-width: 120px;
-    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 12.5px;
+    flex: 0 1 auto;
+    min-width: auto;
+    border-radius: 10px;
   }
 
   .app-shell .sidebar-footer {
-    width: 100%;
-    margin-top: 0;
-    padding-top: 0;
+    margin-top: auto;
+    padding-top: 12px;
     border-top: none;
     order: 3;
   }
@@ -2003,6 +2102,10 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 480px) {
+  .sidebar-toggle {
+    display: flex;
+  }
+
   body {
     width: 100vw;
     overflow-x: hidden;
@@ -2015,20 +2118,37 @@ body {
 
   /* App layout full mobile */
   .app-shell .app-layout {
-    grid-template-columns: 1fr;
+    flex-direction: row;
     width: 100vw;
+  }
+
+  .app-shell .app-shell-main {
+    width: 100vw;
+    margin-left: 0;
   }
 
   .app-shell .app-sidebar {
-    width: 100vw;
-    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 2000;
+    padding: 16px 12px;
     gap: 6px;
     flex-direction: column;
     flex-wrap: nowrap;
+    overflow-y: auto;
+  }
+
+  .app-shell .app-sidebar.sidebar-open {
+    transform: translateX(0);
   }
 
   .app-shell .sidebar-brand {
-    width: 100%;
+    width: auto;
     flex-direction: row;
   }
 
@@ -2037,20 +2157,23 @@ body {
   }
 
   .app-shell nav[data-nav] {
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
-    gap: 4px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: auto;
+    gap: 6px;
   }
 
   .app-shell .nav-link {
-    flex: 0 1 calc(50% - 2px);
-    padding: 7px 8px;
+    flex: 0 1 auto;
+    padding: 8px 10px;
     font-size: 11px;
   }
 
   .app-shell .sidebar-footer {
-    width: 100%;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    width: auto;
   }
 
   /* Topbar mobile */
@@ -2140,7 +2263,7 @@ body {
 
   /* Seismograph mobile */
   .seismo-shell {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     width: 100vw;
   }
 

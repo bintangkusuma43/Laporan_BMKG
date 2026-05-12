@@ -187,6 +187,7 @@ if (!$user) {
 	</div>
 
 	<script src="/laporan_bmkg/assets/js/main.js"></script>
+	<script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
 	<script>
 		const checklistMaster = [
 			{ category: 'Shelter', deskripsi: 'Kondisi Shelter 4 Sisi', parameter: 'Sisi 1 (Depan)' },
@@ -239,6 +240,21 @@ if (!$user) {
 			}
 			listEl.innerHTML = options.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
 			return listEl;
+		}
+
+		function normalizeText(value) {
+			return (value || '').trim().toLowerCase();
+		}
+
+
+
+		// Use centralized PetugasAutofill from petugasAutofill.js
+		function bindPetugasAutoFill(row) {
+			const namaInput = row?.querySelector('.nama');
+			const nipInput = row?.querySelector('.nip');
+			if (namaInput && nipInput) {
+				PetugasAutofill.bindRow(namaInput, nipInput);
+			}
 		}
 
 		function normalizeDateString(value) {
@@ -312,15 +328,17 @@ if (!$user) {
 			}
 			tbody.appendChild(tr);
 			reindex(selector);
+			return tr;
 		}
 
 		function addPetugasRow(data = {}) {
-			addRow('#petugas-table', `
+			const tr = addRow('#petugas-table', `
 				<td data-no></td>
 				<td><input type="text" class="nama" value="${data.nama || ''}" /></td>
 				<td><input type="text" class="nip" value="${data.nip || data.peran || ''}" /></td>
 				<td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
 			`);
+			bindPetugasAutoFill(tr);
 		}
 
 		function renderChecklistRows() {

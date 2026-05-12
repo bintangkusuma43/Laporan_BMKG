@@ -129,6 +129,7 @@ if (!$user) {
 	</div>
 
 	<script src="/laporan_bmkg/assets/js/main.js"></script>
+	<script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
 	<script>
 		function reindex(selector) {
 			document.querySelectorAll(`${selector} tbody tr`).forEach((row, idx) => {
@@ -152,15 +153,17 @@ if (!$user) {
 			if (removeBtn) bindRemove(removeBtn, selector);
 			tbody.appendChild(tr);
 			reindex(selector);
+			return tr;
 		}
 
 		function addPetugasRow() {
-			addRow('#petugas-table', `
+			const tr = addRow('#petugas-table', `
 				<td data-no></td>
 				<td><input type="text" class="nama" /></td>
 				<td><input type="text" class="nip" /></td>
 				<td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
 			`);
+			bindPetugasAutoFill(tr);
 		}
 
 		function addKegiatanRow() {
@@ -248,6 +251,21 @@ if (!$user) {
 				dl.appendChild(optionEl);
 			});
 			return dl;
+		}
+
+		function normalizeText(value) {
+			return (value || '').trim().toLowerCase();
+		}
+
+
+
+		// Use centralized PetugasAutofill from petugasAutofill.js
+		function bindPetugasAutoFill(row) {
+			const namaInput = row?.querySelector('.nama');
+			const nipInput = row?.querySelector('.nip');
+			if (namaInput && nipInput) {
+				PetugasAutofill.bindRow(namaInput, nipInput);
+			}
 		}
 
 		function hydrateLokasiSuggestions() {

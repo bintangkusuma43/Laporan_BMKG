@@ -69,3 +69,43 @@ function ensure_laporan_lampiran_table(PDO $pdo): bool
         return false;
     }
 }
+
+/**
+ * Ensure petugas table has nip column + unique index.
+ */
+function ensure_petugas_nip_column(PDO $pdo): bool
+{
+    try {
+        $stmt = $pdo->prepare("SHOW COLUMNS FROM petugas LIKE 'nip'");
+        $stmt->execute();
+        $hasColumn = (bool) $stmt->fetch();
+    } catch (PDOException $exception) {
+        return false;
+    }
+
+    if (!$hasColumn) {
+        try {
+            $pdo->exec("ALTER TABLE petugas ADD COLUMN nip VARCHAR(30) NULL AFTER nama");
+        } catch (PDOException $exception) {
+            return false;
+        }
+    }
+
+    try {
+        $stmt = $pdo->prepare("SHOW INDEX FROM petugas WHERE Key_name = 'uniq_petugas_nip'");
+        $stmt->execute();
+        $hasIndex = (bool) $stmt->fetch();
+    } catch (PDOException $exception) {
+        return false;
+    }
+
+    if (!$hasIndex) {
+        try {
+            $pdo->exec("ALTER TABLE petugas ADD UNIQUE KEY uniq_petugas_nip (nip)");
+        } catch (PDOException $exception) {
+            return false;
+        }
+    }
+
+    return true;
+}

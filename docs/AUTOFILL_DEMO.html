@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contoh Autofill Petugas - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fb 0%, #edf2ff 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .header p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+            font-size: 14px;
+            color: #334155;
+        }
+        
+        .feature strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1e293b;
+        }
+        
+        .demo {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .demo h2 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .demo-section {
+            margin-bottom: 30px;
+        }
+        
+        .demo-section h3 {
+            color: #475569;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f8fafc;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-group input::placeholder {
+            color: #cbd5e1;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .petugas-row {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 15px;
+        }
+        
+        .petugas-row h4 {
+            color: #334155;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .status {
+            font-size: 12px;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border-left: 3px solid #10b981;
+            color: #047857;
+        }
+        
+        .status.error {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+        
+        .code-block code {
+            color: inherit;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            color: #1e40af;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        
+        .instructions {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .instructions h2 {
+            color: #1e293b;
+            font-size: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .step {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .step:last-child {
+            border-bottom: none;
+        }
+        
+        .step h4 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .step p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🚀 Autofill Petugas - Bidirectional</h1>
+            <p>Fitur autofill dua arah antara Nama dan NIP dengan datalist HTML5. Implementasi production-ready dengan validasi dan sync state tracking.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <strong>✅ Dua Arah</strong>
+                    Nama ↔ NIP
+                </div>
+                <div class="feature">
+                    <strong>🔍 Search</strong>
+                    Di kedua field
+                </div>
+                <div class="feature">
+                    <strong>🛡️ Validasi</strong>
+                    Sinkronisasi otomatis
+                </div>
+                <div class="feature">
+                    <strong>⚡ No Loop</strong>
+                    Sync state tracking
+                </div>
+            </div>
+        </div>
+        
+        <!-- DEMO SECTION -->
+        <div class="demo">
+            <h2>📋 Demo Interaktif</h2>
+            
+            <!-- Demo: Single Row -->
+            <div class="demo-section">
+                <h3>
+                    <span class="badge">Contoh 1</span>
+                    Single Row Autofill
+                </h3>
+                
+                <p style="margin-bottom: 20px; color: #64748b; font-size: 14px;">
+                    Coba ketik nama atau NIP di salah satu field. Field pasangan akan terisi otomatis saat Anda selesai input.
+                </p>
+                
+                <div class="petugas-row">
+                    <h4>Petugas Pelaksana</h4>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label for="demo_nama_1">Nama Petugas</label>
+                            <input 
+                                type="text" 
+                                id="demo_nama_1" 
+                                class="nama"
+                                list="list_nama_demo_1"
+                                autocomplete="off"
+                                placeholder="Ketik nama atau scroll untuk melihat daftar"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="demo_nip_1">NIP</label>
+                            <input 
+                                type="text" 
+                                id="demo_nip_1" 
+                                class="nip"
+                                list="list_nip_demo_1"
+                                autocomplete="off"
+                                placeholder="Atau ketik NIP di sini"
+                            />
+                        </div>
+                    </div>
+                    <div class="status" id="status_1" style="display:none;"></div>
+                </div>
+            </div>
+            
+            <!-- Demo: Multiple Rows -->
+            <div class="demo-section">
+                <h3>
+                    <span class="badge">Contoh 2</span>
+                    Multiple Rows (Form Laporan)
+                </h3>
+                
+                <p style="margin-bottom: 20px; color: #64748b; font-size: 14px;">
+                    Setiap baris memiliki autofill yang independent dengan datalist terpisah.
+                </p>
+                
+                <button class="btn btn-secondary" id="btn_add_row" style="margin-bottom: 15px;">+ Tambah Petugas</button>
+                
+                <div id="petugas_list"></div>
+            </div>
+            
+            <!-- Info Box -->
+            <div class="info-box">
+                <strong>💡 Tip:</strong> Coba ketik "ARDH" atau "1981" untuk melihat suggestions dengan datalist HTML5 native.
+            </div>
+        </div>
+        
+        <!-- IMPLEMENTATION SECTION -->
+        <div class="instructions">
+            <h2>📝 Cara Implementasi</h2>
+            
+            <div class="step">
+                <h4>
+                    <span class="step-number">1</span>
+                    Script Include
+                </h4>
+                <p>Tambahkan script petugasAutofill.js ke HTML Anda:</p>
+                <div class="code-block"><code>&lt;script src="/laporan_bmkg/assets/js/petugasAutofill.js"&gt;&lt;/script&gt;</code></div>
+            </div>
+            
+            <div class="step">
+                <h4>
+                    <span class="step-number">2</span>
+                    HTML Input
+                </h4>
+                <p>Buat input dengan class nama dan nip, serta list attribute:</p>
+                <div class="code-block"><code>&lt;input type="text" class="nama" id="nama_petugas" list="list_nama" autocomplete="off" /&gt;
+&lt;input type="text" class="nip" id="nip_petugas" list="list_nip" autocomplete="off" /&gt;</code></div>
+            </div>
+            
+            <div class="step">
+                <h4>
+                    <span class="step-number">3</span>
+                    Bind JavaScript
+                </h4>
+                <p>Bind kedua input dengan PetugasAutofill.bindRow():</p>
+                <div class="code-block"><code>const namaInput = document.querySelector('.nama');
+const nipInput = document.querySelector('.nip');
+PetugasAutofill.bindRow(namaInput, nipInput, {
+  onSelect: ({nama, nip}) => {
+    console.log('Selected:', nama, nip);
+  }
+});</code></div>
+            </div>
+            
+            <div class="step">
+                <h4>
+                    <span class="step-number">4</span>
+                    Selesai!
+                </h4>
+                <p>Autofill siap digunakan dengan datalist dropdown dan validasi bidirectional.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Global configuration (jika diperlukan di actual environment)
+        const BASE_URL = window.location.origin;
+        const APP_BASE_PATH = '/laporan_bmkg';
+    </script>
+    
+    <!-- Load autofill script -->
+    <script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
+    
+    <!-- Demo Logic -->
+    <script>
+        // Simulated data untuk demo (production: dari API)
+        const DEMO_DATA = [
+            { nama: 'ARDHIANTO SEPTIADHI, S.Si., M.T.', nip: '198109292006041007' },
+            { nama: 'DWI BUDI SUSANTI, S.T., M.M.', nip: '197405021998032001' },
+            { nama: 'BAMBANG SUNARDI, S.Si., M.T.', nip: '197610252006041003' },
+            { nama: 'MUJIANTO, S.T.', nip: '197501121997031001' },
+            { nama: 'WAWAN JOKO SUWONDO, S.T., M.T.', nip: '197706111998031001' },
+            { nama: 'MARDIYANTO, S.Si., M.Sc.', nip: '197505161998031001' },
+            { nama: 'NUGROHO BUDI W., S.Si., M.Si.', nip: '198402232008011011' },
+            { nama: 'ANAS FAUZI MASYKURI, S.Si., M.T.', nip: '197909172006041005' },
+            { nama: 'HERU GUNAWAN, S.T.', nip: '197311221995031001' },
+            { nama: 'BIN JALI WINTORO, S.Kom.', nip: '197210211996031001' },
+        ];
+        
+        let demoRowCount = 0;
+        
+        function bindDemo(namaInput, nipInput, statusEl) {
+            PetugasAutofill.bindRow(namaInput, nipInput, {
+                onSelect: ({nama, nip}) => {
+                    if (statusEl) {
+                        statusEl.style.display = 'block';
+                        statusEl.className = 'status';
+                        statusEl.textContent = '✓ Data valid: ' + nama + ' (' + nip + ')';
+                    }
+                }
+            });
+            
+            // Show/hide status on change
+            namaInput.addEventListener('change', () => {
+                if (statusEl) {
+                    const isValid = namaInput.value && nipInput.value;
+                    statusEl.style.display = isValid ? 'block' : 'none';
+                    if (isValid) {
+                        statusEl.className = 'status';
+                        statusEl.textContent = '✓ Data sinkron: ' + namaInput.value + ' (' + nipInput.value + ')';
+                    }
+                }
+            });
+            
+            nipInput.addEventListener('change', () => {
+                if (statusEl) {
+                    const isValid = namaInput.value && nipInput.value;
+                    statusEl.style.display = isValid ? 'block' : 'none';
+                    if (isValid) {
+                        statusEl.className = 'status';
+                        statusEl.textContent = '✓ Data sinkron: ' + namaInput.value + ' (' + nipInput.value + ')';
+                    }
+                }
+            });
+        }
+        
+        // Initialize demo 1
+        document.addEventListener('DOMContentLoaded', () => {
+            const namaInput1 = document.getElementById('demo_nama_1');
+            const nipInput1 = document.getElementById('demo_nip_1');
+            const statusEl1 = document.getElementById('status_1');
+            
+            if (namaInput1 && nipInput1) {
+                bindDemo(namaInput1, nipInput1, statusEl1);
+            }
+            
+            // Demo 2: Add row button
+            const btnAddRow = document.getElementById('btn_add_row');
+            const petugasList = document.getElementById('petugas_list');
+            
+            if (btnAddRow && petugasList) {
+                btnAddRow.addEventListener('click', () => {
+                    demoRowCount++;
+                    const rowHtml = `
+                        <div class="petugas-row" id="row_${demoRowCount}">
+                            <h4>Petugas #{demoRowCount} 
+                                <button class="btn btn-secondary" style="float:right;padding:6px 12px;font-size:12px;" onclick="document.getElementById('row_${demoRowCount}').remove()">Hapus</button>
+                            </h4>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Nama Petugas</label>
+                                    <input 
+                                        type="text" 
+                                        class="nama"
+                                        id="demo_nama_${demoRowCount}"
+                                        list="list_nama_demo_${demoRowCount}"
+                                        autocomplete="off"
+                                        placeholder="Nama petugas"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>NIP</label>
+                                    <input 
+                                        type="text" 
+                                        class="nip"
+                                        id="demo_nip_${demoRowCount}"
+                                        list="list_nip_demo_${demoRowCount}"
+                                        autocomplete="off"
+                                        placeholder="NIP petugas"
+                                    />
+                                </div>
+                            </div>
+                            <div class="status" id="status_demo_${demoRowCount}" style="display:none;"></div>
+                        </div>
+                    `;
+                    petugasList.insertAdjacentHTML('beforeend', rowHtml);
+                    
+                    // Bind autofill ke row baru
+                    const namaInput = document.getElementById(`demo_nama_${demoRowCount}`);
+                    const nipInput = document.getElementById(`demo_nip_${demoRowCount}`);
+                    const statusEl = document.getElementById(`status_demo_${demoRowCount}`);
+                    
+                    if (namaInput && nipInput) {
+                        bindDemo(namaInput, nipInput, statusEl);
+                    }
+                });
+                
+                // Add initial row
+                btnAddRow.click();
+            }
+        });
+    </script>
+</body>
+</html>

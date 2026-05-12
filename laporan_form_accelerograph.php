@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once __DIR__ . '/includes/auth.php';
 $user = current_user();
 if (!$user) {
@@ -170,6 +170,7 @@ if (!$user) {
 	</div>
 
 	<script src="/laporan_bmkg/assets/js/main.js"></script>
+	<script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
 	<script>
 		const checklistMaster = [
 			{ category: 'WRSNG', items: ['Shelter', 'Sekitar Peralatan'] },
@@ -216,6 +217,21 @@ if (!$user) {
 			listEl.innerHTML = options.map(opt => `<option value="${opt.value}">${opt.label}</option>`).join('');
 			return listEl;
 		}
+
+		function normalizeText(value) {
+			return (value || '').trim().toLowerCase();
+		}
+
+		// Use centralized PetugasAutofill from petugasAutofill.js
+		function bindPetugasAutoFill(row) {
+			const namaInput = row?.querySelector('.nama');
+			const nipInput = row?.querySelector('.nip');
+			if (namaInput && nipInput) {
+				PetugasAutofill.bindRow(namaInput, nipInput);
+			}
+		}
+
+
 
 		function autoFillSiteFromMaster() {
 			const kodeInput = document.getElementById('kode_site');
@@ -275,15 +291,17 @@ if (!$user) {
 			}
 			tbody.appendChild(tr);
 			reindex(selector);
+			return tr;
 		}
 
 		function addPetugasRow() {
-			addRow('#petugas-table', `
+			const tr = addRow('#petugas-table', `
 				<td data-no></td>
 				<td><input type="text" class="nama" /></td>
 				<td><input type="text" class="nip" /></td>
 				<td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
 			`);
+			bindPetugasAutoFill(tr);
 		}
 
 		function addGantiRow() {

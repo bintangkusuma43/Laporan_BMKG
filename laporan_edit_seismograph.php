@@ -206,6 +206,7 @@ if (!$laporan_id) {
 	</div>
 
 	<script src="/laporan_bmkg/assets/js/main.js"></script>
+	<script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
 	<script>
 		const LAPORAN_ID = <?php echo json_encode($laporan_id); ?>;
 		
@@ -328,6 +329,21 @@ if (!$laporan_id) {
 			return listEl;
 		}
 
+		function normalizeText(value) {
+			return (value || '').trim().toLowerCase();
+		}
+
+
+
+		// Use centralized PetugasAutofill from petugasAutofill.js
+		function bindPetugasAutoFill(row) {
+			const namaInput = row?.querySelector('.nama');
+			const nipInput = row?.querySelector('.nip');
+			if (namaInput && nipInput) {
+				PetugasAutofill.bindRow(namaInput, nipInput);
+			}
+		}
+
 		function normalizeDateString(value) {
 			const val = (value || '').trim();
 			const full = val.match(/\d{4}-\d{2}-\d{2}/);
@@ -426,16 +442,18 @@ if (!$laporan_id) {
 			}
 			tbody.appendChild(tr);
 			reindex(selector);
+			return tr;
 		}
 
 		function addPetugasRow(data = {}) {
 			const html = `
 				<td data-no></td>
 				<td><input type="text" class="nama" value="${data.nama || ''}" /></td>
-				<td><input type="text" class="nip" value="${data.nip || data.peran || ''}" /></td>
+				<td><input type="text" class="nip" value="${data.nip || ''}" /></td>
 				<td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
 			`;
-			addRow('#petugas-table', html);
+			const tr = addRow('#petugas-table', html);
+			bindPetugasAutoFill(tr);
 		}
 
 		function renderChecklistRows() {

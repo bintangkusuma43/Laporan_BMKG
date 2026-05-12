@@ -62,6 +62,7 @@ $navSections = [
         'title' => 'Pengaturan',
         'items' => [
           ['href' => '/laporan_bmkg/kelola_akun.php', 'label' => 'Kelola Akun', 'icon' => 'users', 'active' => nav_active('/laporan_bmkg/kelola_akun.php')],
+          ['href' => '/laporan_bmkg/master_pegawai.php', 'label' => 'Master Pegawai', 'icon' => 'users', 'active' => nav_active('/laporan_bmkg/master_pegawai.php')],
         ],
       ];
     }

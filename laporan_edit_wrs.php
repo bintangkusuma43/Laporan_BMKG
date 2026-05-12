@@ -156,6 +156,7 @@ if (!$laporan_id) {
 	</div>
 
 	<script src="/laporan_bmkg/assets/js/main.js"></script>
+	<script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
 	<script>
 		const LAPORAN_ID = <?php echo json_encode($laporan_id); ?>;
 
@@ -181,6 +182,7 @@ if (!$laporan_id) {
 			if (removeBtn) bindRemove(removeBtn, selector);
 			tbody.appendChild(tr);
 			reindex(selector);
+			return tr;
 		}
 
 		function addPetugasRow(data = {}) {
@@ -190,7 +192,8 @@ if (!$laporan_id) {
 				<td><input type="text" class="nip" value="${data.nip || ''}" /></td>
 				<td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
 			`;
-			addRow('#petugas-table', html);
+			const tr = addRow('#petugas-table', html);
+			bindPetugasAutoFill(tr);
 		}
 
 		function addKegiatanRow(data = {}) {
@@ -329,6 +332,21 @@ if (!$laporan_id) {
 				dl.appendChild(optionEl);
 			});
 			return dl;
+		}
+
+		function normalizeText(value) {
+			return (value || '').trim().toLowerCase();
+		}
+
+
+
+		// Use centralized PetugasAutofill from petugasAutofill.js
+		function bindPetugasAutoFill(row) {
+			const namaInput = row?.querySelector('.nama');
+			const nipInput = row?.querySelector('.nip');
+			if (namaInput && nipInput) {
+				PetugasAutofill.bindRow(namaInput, nipInput);
+			}
 		}
 
 		function hydrateLokasiSuggestions() {

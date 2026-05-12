@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ], 405);
 }
 
-$jenis = $_POST['jenis'] ?? '';
+$jenisInput = $_POST['jenis'] ?? '';
+// Normalisasi: intensitymeter disimpan sebagai accelerograph (schema ENUM tidak punya intensitymeter)
+$jenis = $jenisInput === 'intensitymeter' ? 'accelerograph' : $jenisInput;
 $stasiunId = $_POST['stasiun_id'] ?? null;
 $tanggalLaporan = $_POST['tanggal_laporan'] ?? '';
 $nomorSurat = $_POST['nomor_surat'] ?? null;

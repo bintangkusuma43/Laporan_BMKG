@@ -264,7 +264,7 @@ if (!$user) {
             <div class="stack" style="margin-bottom:8px;"><button type="button" class="btn-mini" id="seis-add-petugas">Tambah Petugas</button></div>
             <div class="table-wrap" style="margin-bottom:12px;">
               <table class="line-table" id="seis-petugas-table">
-                <thead><tr><th style="width:70px;">No</th><th>Nama</th><th>Peran</th><th style="width:140px;">Aksi</th></tr></thead>
+                <thead><tr><th style="width:70px;">No</th><th>Nama</th><th>NIP</th><th style="width:140px;">Aksi</th></tr></thead>
                 <tbody></tbody>
               </table>
             </div>
@@ -333,6 +333,7 @@ if (!$user) {
   </div>
 
   <script src="/laporan_bmkg/assets/js/main.js"></script>
+  <script src="/laporan_bmkg/assets/js/petugasAutofill.js"></script>
   <script>
     const jenisEl = document.getElementById('jenis');
     const headingEl = document.getElementById('heading');
@@ -346,6 +347,18 @@ if (!$user) {
       { category: 'Sistem Komunikasi', items: ['Modem GSM', 'Antenna Yagi', 'Modem VSAT', 'Antenna VSAT'] },
       { category: 'Peralatan Seismik', items: ['Sensor Accelerometer', 'Digitizer', 'GPS'] }
     ];
+
+    // ========================================
+    // HELPER UNTUK AUTOFILL PETUGAS
+    // ========================================
+    
+    /**
+     * Generate ID unik untuk datalist
+     */
+    let petugasRowCount = 0;
+    function generatePetugasRowId() {
+      return `petugas_row_${++petugasRowCount}_${Date.now()}`;
+    }
 
     function toNullableNumber(value) {
       if (value === '' || value === null || value === undefined) return '';
@@ -367,6 +380,7 @@ if (!$user) {
       if (onCreate) onCreate(tr);
       tbody.appendChild(tr);
       reindexTable(selector);
+      return tr;
     }
 
     function bindRemove(btn, selector) {
@@ -374,6 +388,15 @@ if (!$user) {
         btn.closest('tr')?.remove();
         reindexTable(selector);
       });
+    }
+
+    // Use centralized PetugasAutofill from petugasAutofill.js
+    function bindPetugasAutoFill(row) {
+      const namaInput = row?.querySelector('.nama');
+      const nipInput = row?.querySelector('.nip');
+      if (namaInput && nipInput) {
+        PetugasAutofill.bindRow(namaInput, nipInput);
+      }
     }
 
     function collectRows(selector, mapper) {
@@ -426,12 +449,16 @@ if (!$user) {
 
     function initWrs() {
       document.getElementById('wrs-add-petugas').addEventListener('click', () => {
+        const rowId = generatePetugasRowId();
         addRow('#wrs-petugas-table', `
           <td data-no></td>
-          <td><input type="text" class="nama" /></td>
-          <td><input type="text" class="nip" /></td>
+          <td><input type="text" class="nama" id="wrs_nama_${rowId}" list="list_nama_${rowId}" autocomplete="off" /></td>
+          <td><input type="text" class="nip" id="wrs_nip_${rowId}" list="list_nip_${rowId}" autocomplete="off" /></td>
           <td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
-        `, (tr) => bindRemove(tr.querySelector('.btn-remove'), '#wrs-petugas-table'));
+        `, (tr) => {
+          bindRemove(tr.querySelector('.btn-remove'), '#wrs-petugas-table');
+          bindPetugasAutoFill(tr);
+        });
       });
 
       document.getElementById('wrs-add-kegiatan').addEventListener('click', () => {
@@ -451,12 +478,16 @@ if (!$user) {
 
     function initAccelerograph() {
       document.getElementById('acc-add-petugas').addEventListener('click', () => {
+        const rowId = generatePetugasRowId();
         addRow('#acc-petugas-table', `
           <td data-no></td>
-          <td><input type="text" class="nama" /></td>
-          <td><input type="text" class="nip" /></td>
+          <td><input type="text" class="nama" id="acc_nama_${rowId}" list="list_nama_${rowId}" autocomplete="off" /></td>
+          <td><input type="text" class="nip" id="acc_nip_${rowId}" list="list_nip_${rowId}" autocomplete="off" /></td>
           <td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
-        `, (tr) => bindRemove(tr.querySelector('.btn-remove'), '#acc-petugas-table'));
+        `, (tr) => {
+          bindRemove(tr.querySelector('.btn-remove'), '#acc-petugas-table');
+          bindPetugasAutoFill(tr);
+        });
       });
       document.getElementById('acc-add-ganti').addEventListener('click', () => addPenggantianRow('#acc-ganti-table'));
 
@@ -496,12 +527,16 @@ if (!$user) {
 
     function initSeismograph() {
       document.getElementById('seis-add-petugas').addEventListener('click', () => {
+        const rowId = generatePetugasRowId();
         addRow('#seis-petugas-table', `
           <td data-no></td>
-          <td><input type="text" class="nama" /></td>
-          <td><input type="text" class="peran" /></td>
+          <td><input type="text" class="nama" id="seis_nama_${rowId}" list="list_nama_${rowId}" autocomplete="off" /></td>
+          <td><input type="text" class="nip" id="seis_nip_${rowId}" list="list_nip_${rowId}" autocomplete="off" /></td>
           <td><button type="button" class="btn-mini btn-remove">Hapus</button></td>
-        `, (tr) => bindRemove(tr.querySelector('.btn-remove'), '#seis-petugas-table'));
+        `, (tr) => {
+          bindRemove(tr.querySelector('.btn-remove'), '#seis-petugas-table');
+          bindPetugasAutoFill(tr);
+        });
       });
 
       document.getElementById('seis-add-checklist').addEventListener('click', () => {
@@ -685,8 +720,8 @@ if (!$user) {
         },
         petugas_pelaksana: collectRows('#seis-petugas-table', (row) => {
           const nama = row.querySelector('.nama')?.value.trim() || '';
-          const peran = row.querySelector('.peran')?.value.trim() || '';
-          return nama || peran ? { nama, peran } : null;
+          const nip = row.querySelector('.nip')?.value.trim() || '';
+          return nama || nip ? { nama, nip } : null;
         }),
         checklist,
         pembersihan: {

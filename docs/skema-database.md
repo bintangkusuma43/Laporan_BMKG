@@ -122,6 +122,7 @@ Data master teknisi / petugas lapangan BMKG.
 |--------------|---------------|------|------------------------------------------|
 | `id`         | INT AI PK     | NO   | Primary key                              |
 | `nama`       | VARCHAR(100)  | NO   | Nama lengkap petugas                     |
+| `nip`        | VARCHAR(30)   | YES  | NIP pegawai                              |
 | `upt`        | VARCHAR(150)  | NO   | Unit Pelaksana Teknis asal petugas       |
 | `jabatan`    | VARCHAR(100)  | YES  | Jabatan / posisi                         |
 | `kontak`     | VARCHAR(50)   | YES  | Nomor telepon / HP                       |
